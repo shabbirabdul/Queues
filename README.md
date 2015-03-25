@@ -1,5 +1,63 @@
 Cache, Proxies, Queues
 =========================
+###  set/get requests
+
+app.get('/get',function(req,res){
+	client.get("key",function(err,value){
+		res.send(value)
+	})
+})
+
+
+app.get('/set',function(req,res){
+	client.set("key", "this message will destruct in 10 sec");
+	client.expire("key",10);
+	res.send('Key was added succsessfully');
+})
+
+### recent
+app.use(function(req, res, next)
+{
+	console.log(req.method, req.url);
+	client.lpush("visits",req.url);
+	next(); 
+})
+
+app.get('/recent',function(req,res){
+	client.lrange("visits",0,5,function(err,value){
+		res.send(value);
+	})
+})
+
+### upload and meow
+
+app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
+ 	console.log(req.body) // form fields
+ 	console.log(req.files) // form files
+ 	if( req.files.image ){
+		fs.readFile( req.files.image.path, function (err, data) {
+ 			if (err) throw err;
+ 			var img = new Buffer(data).toString('base64');
+ 			console.log(img);
+			client.lpush('images',img)
+ 			});
+ 	}
+ 	res.status(204).end()
+ }])
+
+ app.get('/meow', function(req, res) {
+	 client.lpop('images',function(err, imagedata){
+ 		if (err) throw err
+ 		res.writeHead(200, {'content-type':'text/html'});
+ //items.forEach(function (imagedata)
+ //{
+ 		res.write("<h1>\n<img src='data:my_pic.jpg;base64,"+imagedata+"'/>");
+ //});
+ 		res.end();
+ 		})
+ })
+
+
 
 ### Setup
 
