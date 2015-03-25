@@ -49,13 +49,23 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
 	 client.lpop('images',function(err, imagedata){
  		if (err) throw err
  		res.writeHead(200, {'content-type':'text/html'});
- //items.forEach(function (imagedata)
- //{
  		res.write("<h1>\n<img src='data:my_pic.jpg;base64,"+imagedata+"'/>");
- //});
  		res.end();
  		})
  })
+
+### Additional Server
+
+ I have created another server running on port 3001 in webserver1.js
+
+var server1 = app.listen(3001, function () {
+	var host = server1.address().address
+	var port = server1.address().port
+ 	console.log('Example app listening at http://%s:%s', host, port)
+})
+
+### Proxy
+
 
 
 
