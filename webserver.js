@@ -59,7 +59,6 @@ var multer = require('multer')
 client.lpush('images',img)
  });
  }
- res.status(204).end()
  }]);
 
  app.get('/meow', function(req, res) {
