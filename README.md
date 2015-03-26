@@ -66,6 +66,27 @@ var server1 = app.listen(3001, function () {
 
 ### Proxy
 
+Implemented a proxy that toggles between two servers and uniformly distributes the load between 2 servers. By default server running on port 3000 is hit, then on the next request the sent to 3001.
+
+app.get('/', function(req, res) {
+		  client.get('lasthit',function(err,value){
+				if(value == '3000'){
+					balancer='3001'
+					client.set('lasthit','3001')
+				}
+				else{
+					balancer='3000'
+					client.set('lasthit','3000')
+				}
+				request('http://localhost:'+balancer+'/', function (error, response, body) {
+					if (!error && response.statusCode == 200) {
+					res.send(body) 
+					}
+				})
+			})
+})
+
+
 
 
 
