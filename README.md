@@ -71,16 +71,16 @@ Implemented a proxy that toggles between two servers and uniformly distributes t
 app.get('/', function(req, res) {
 		  client.get('lasthit',function(err,value){
 				if(value == '3000'){
-					balancer='3001'
+					nexthit='3001'
 					client.set('lasthit','3001')
 				}
 				else{
-					balancer='3000'
+					nexthit='3000'
 					client.set('lasthit','3000')
 				}
-				request('http://localhost:'+balancer+'/', function (error, response, body) {
+				request('http://localhost:'+nexthit+'/', function (error, response, body) {
 					if (!error && response.statusCode == 200) {
-					res.send(body) 
+						res.send(body) 
 					}
 				})
 			})
