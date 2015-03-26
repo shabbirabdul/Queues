@@ -3,7 +3,7 @@ var express = require('express')
 var request = require('request')
 var app = express()
 var client = redis.createClient(6379, '127.0.0.1', {})
-var balancer='3000'
+var nexthit='3000'
 
 var server = app.listen(3006, function () {
 
@@ -16,14 +16,14 @@ var server = app.listen(3006, function () {
 app.get('/', function(req, res) {
 		  client.get('lasthit',function(err,value){
 				if(value == '3000'){
-					balancer='3001'
+					nexthit='3001'
 					client.set('lasthit','3001')
 				}
 				else{
-					balancer='3000'
+					nexthit='3000'
 					client.set('lasthit','3000')
 				}
-				request('http://localhost:'+balancer+'/', function (error, response, body) {
+				request('http://localhost:'+nexthit+'/', function (error, response, body) {
 					if (!error && response.statusCode == 200) {
 						res.send(body) 
 					}
