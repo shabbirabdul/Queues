@@ -1,6 +1,6 @@
 Cache, Proxies, Queues
 =========================
-###  set/get requests
+###  set/get requests :
 ```
 app.get('/get',function(req,res){
 	client.get("key",function(err,value){
@@ -14,7 +14,7 @@ app.get('/set',function(req,res){
 	res.send('Key was added succsessfully');
 })
 ```
-### recent
+### recent :
 ```
 app.use(function(req, res, next)
 {
@@ -29,7 +29,7 @@ app.get('/recent',function(req,res){
 	})
 })
 ```
-### upload and meow
+### upload and meow :
 ```
 app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
  	console.log(req.body) // form fields
@@ -54,7 +54,7 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
  		})
  })
 ```
-### Additional Server
+### Additional Server :
 
  I have created another server running on port 3001 in webserver1.js
 ```
@@ -64,7 +64,7 @@ var server1 = app.listen(3001, function () {
  	console.log('Example app listening at http://%s:%s', host, port)
 })
 ```
-### Proxy
+### Proxy :
 
 Implemented a proxy that toggles between two servers and uniformly distributes the load between 2 servers. By default server running on port 3000 is hit, then on the next request the sent to 3001.
 ```
