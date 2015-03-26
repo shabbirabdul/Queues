@@ -1,21 +1,21 @@
 Cache, Proxies, Queues
 =========================
 ###  set/get requests
-
+```
 app.get('/get',function(req,res){
 	client.get("key",function(err,value){
 		res.send(value)
 	})
 })
 
-
 app.get('/set',function(req,res){
 	client.set("key", "this message will destruct in 10 sec");
 	client.expire("key",10);
 	res.send('Key was added succsessfully');
 })
-
+```
 ### recent
+```
 app.use(function(req, res, next)
 {
 	console.log(req.method, req.url);
@@ -28,9 +28,9 @@ app.get('/recent',function(req,res){
 		res.send(value);
 	})
 })
-
+```
 ### upload and meow
-
+```
 app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
  	console.log(req.body) // form fields
  	console.log(req.files) // form files
@@ -53,21 +53,21 @@ app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
  		res.end();
  		})
  })
-
+```
 ### Additional Server
 
  I have created another server running on port 3001 in webserver1.js
-
+```
 var server1 = app.listen(3001, function () {
 	var host = server1.address().address
 	var port = server1.address().port
  	console.log('Example app listening at http://%s:%s', host, port)
 })
-
+```
 ### Proxy
 
 Implemented a proxy that toggles between two servers and uniformly distributes the load between 2 servers. By default server running on port 3000 is hit, then on the next request the sent to 3001.
-
+```
 app.get('/', function(req, res) {
 		  client.get('lasthit',function(err,value){
 				if(value == '3000'){
@@ -85,7 +85,7 @@ app.get('/', function(req, res) {
 				})
 			})
 })
-
+```
 
 
 
