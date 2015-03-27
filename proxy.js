@@ -30,3 +30,43 @@ app.get('/', function(req, res) {
 				})
 			})
 })
+
+app.get('/get',function(req,res){
+	request('http://localhost:'+nexthit+'/get', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					res.send(body) 
+				}
+			})
+})
+
+app.get('/set',function(req,res){
+	request('http://localhost:'+nexthit+'/set', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					res.send(body) 
+				}
+			})
+})
+
+app.get('/upload',function(req,res){
+	request('http://localhost:'+nexthit+'/upload', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					res.send(body) 
+				}
+			})
+})
+
+app.get('/meow',function(req,res){
+	request('http://localhost:'+nexthit+'/meow', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					res.send(body) 
+				}
+			})
+})
+
+app.get('/recent',function(req,res){
+	request('http://localhost:'+nexthit+'/recent', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					res.send(body) 
+				}
+			})
+})
